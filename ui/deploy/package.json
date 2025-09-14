@@ -1,0 +1,29 @@
+{
+  "name": "knine-deploy-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "viem": "^2.9.0",
+    "wagmi": "^2.10.5",
+    "@tanstack/react-query": "^5.56.2",
+    "@wagmi/core": "^2.11.3",
+    "@walletconnect/ethereum-provider": "^2.15.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.8.3",
+    "vite": "^5.4.10"
+  }
+}

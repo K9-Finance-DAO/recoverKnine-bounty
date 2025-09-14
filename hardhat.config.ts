@@ -1,10 +1,15 @@
 import type { HardhatUserConfig } from "hardhat/config";
 
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
+import "@typechain/hardhat";
 import { configVariable } from "hardhat/config";
 
 const config: HardhatUserConfig = {
   plugins: [hardhatToolboxViemPlugin],
+  typechain: {
+    outDir: "ui/deploy/src/typechain",
+    target: "viem",
+  },
   solidity: {
     profiles: {
       default: {
