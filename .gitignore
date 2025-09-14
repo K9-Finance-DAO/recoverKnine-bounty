@@ -137,5 +137,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Hardhat artifacts and cache
 artifacts/
 cache/compile-cache.json
+edr-fork-cache/*
+typechain/*
