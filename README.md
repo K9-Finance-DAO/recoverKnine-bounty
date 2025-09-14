@@ -4,6 +4,11 @@
     - Hash: `0xe9b2d8255a7eea82848153455c2beb79a13c2bd8b5c235a3917151fd80b9b4d2`
 - Final Bounty Contract: [KnineRecoveryBountyDecayAccept.sol](contracts/KnineRecoveryBountyDecayAccept.sol)
 
+
+---
+
+# Contracts Overview
+
 Short contracts to offer an on-chain bounty for returning KNINE.
 
 Three versions of the bounty recovery contract:

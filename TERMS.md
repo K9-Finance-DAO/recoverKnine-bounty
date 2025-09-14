@@ -187,7 +187,7 @@ Pick one method:
 * **Foundry (cast)**
 
   ```bash
-  cast keccak file:terms-knine-recovery-fixed.md
+  cast keccak file:knine-terms-v1.md
   ```
 * **Node (ethers v6)**
 
@@ -195,7 +195,7 @@ Pick one method:
   import fs from 'node:fs';
   import { keccak256, toUtf8Bytes } from 'ethers';
 
-  const text = fs.readFileSync('terms-knine-recovery-fixed.md', 'utf8'); // UTF-8, no BOM
+  const text = fs.readFileSync('knine-terms-v1.md', 'utf8'); // UTF-8, no BOM
   console.log( keccak256(toUtf8Bytes(text)) );
   ```
 * **CLI keccak** (if installed)
