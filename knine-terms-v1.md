@@ -43,7 +43,7 @@ Let `t = max(0, ts − START)`, where `ts` is the reference time (acceptedAt or 
 **Freeze semantics:** `accept()` freezes **time** (the `ts` used in the formula), **not** an absolute ETH amount.
 
 ## 6) How to Claim
-### **Path A — With Acceptance (Recommened)**  
+### **Path A — With Acceptance (Recommended)**  
 1) From **Exploiter**, approve `Amount` for **BountyContract** on **KnineToken**.  
 2) Call `accept()` from **Exploiter** before expiry.  
 3) Anyone calls `recoverKnine()`: the contract pulls KNINE → **Treasury**, pays ETH → **Exploiter**, and sets `finalized = true`.
