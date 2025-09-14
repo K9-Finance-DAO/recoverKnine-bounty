@@ -2,6 +2,7 @@ import { Connect } from './components/Connect'
 import { DeployForm } from './components/DeployForm'
 import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { ExploiterAssist } from './pages/ExploiterAssist'
+import { BuildTag } from './components/BuildTag'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
             <NavLink to="/assist" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Assist Exploiter</NavLink>
           </nav>
           <div className="space" />
+          <BuildTag />
           <Connect />
         </div>
         <div className="card">

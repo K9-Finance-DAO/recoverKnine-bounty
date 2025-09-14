@@ -5,6 +5,7 @@ export const TREASURY_ADDR = '0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84' as con
 // 248.9894 Billion KNINE (18 decimals)
 export const KNINE_AMOUNT = 248989400000000000000000000000n
 export const MAINNET_ID = 1
+export const HARDHAT_CHAIN_ID = 31337
 
 export const ERC20_ABI = [
   { inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], name: 'allowance', outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' },

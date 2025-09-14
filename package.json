@@ -4,7 +4,13 @@
         "build:contracts": "hardhat compile",
         "export:ui": "node scripts/export-ui-artifacts.mjs",
         "build:contracts:ui": "pnpm run build:contracts && pnpm run export:ui",
-        "fork:mainnet": "hardhat node --network hardhatMainnet --fork $MAINNET_RPC_URL"
+        "fork:mainnet": "hardhat node --network hardhatMainnet --fork $MAINNET_RPC_URL",
+        "predev:ui": "pnpm --dir ui/deploy install",
+        "dev:ui": "pnpm --dir ui/deploy dev",
+        "prebuild:ui": "pnpm --dir ui/deploy install",
+        "build:ui": "pnpm run build:contracts:ui && pnpm --dir ui/deploy build",
+        "prepreview:ui": "pnpm --dir ui/deploy install",
+        "preview:ui": "pnpm --dir ui/deploy preview"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-ignition": "^3.0.3",
