@@ -1,6 +1,6 @@
 # KNINE Recovery Bounty — Terms
 
-## Header (hash-bound fields; fill placeholders before hashing)
+## Header (hash-bound fields)
 Version: 1  
 ContractVariant: KnineRecoveryBountyDecayAccept  
 ChainId: 1  
@@ -48,10 +48,10 @@ Let `t = max(0, ts − START)`, where `ts` is the reference time (acceptedAt or 
 2) Call `accept()` from **Exploiter** before expiry.  
 3) Anyone calls `recoverKnine()`: the contract pulls KNINE → **Treasury**, pays ETH → **Exploiter**, and sets `finalized = true`.
 
-#### **Anti‑reneging:**  
-A **fairness safeguard** has been added to protect **Exploiter** if `accept()` is called.
-
-If `acceptedAt > 0` **and** the allowance & balance checks above remain true, `withdrawToTreasury()` is **blocked** and  `withdrawToTreasury()` **reverts** (`LOCKED_BY_ACCEPT`) (we can’t withdraw funds out from under a valid acceptance).
+> #### **Anti‑reneging:**  
+> A **fairness safeguard** has been added to protect **Exploiter** if `accept()` is called.
+> 
+> If `acceptedAt > 0` **and** the allowance & balance checks above remain true, `withdrawToTreasury()` is **blocked** and  `withdrawToTreasury()` **reverts** (`LOCKED_BY_ACCEPT`) (we can’t withdraw funds out from under a valid acceptance).
 
 ### **Path B — Without Acceptance**  
 1) Approve `Amount`.  
