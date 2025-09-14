@@ -56,7 +56,7 @@ Three versions of the bounty recovery contract:
 
 * `accept()` – only exploiter; requires `allowance ≥ AMOUNT`; records `acceptedAt` (freezes payout level).
 * `recoverKnine()` – uses `acceptedAt` (if set), then clears it, pays ETH.
-* `ownerWithdraw()` – blocked if `acceptedAt > 0` **and** `allowance ≥ AMOUNT` (prevents reneging); when allowed, sends ETH to `TREASURY`.
+* `withdrawToTreasury()` – after `initialPeriod + decayPeriod`, reclaims ETH to `TREASURY` unless blocked by a valid frozen acceptance.
 
 **Events:** `Accepted(acceptedAt, termsHash)`, `DealFinalized(...)`
 

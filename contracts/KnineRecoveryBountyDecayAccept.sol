@@ -9,7 +9,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @notice  Adds `accept()` so the exploiter can freeze the decay once they are ready:
  *          - `accept()` requires allowance >= AMOUNT, and records `acceptedAt`.
  *          - `recoverKnine()` pays using the frozen time (or now if not accepted), then finalizes.
- *          - `ownerWithdraw()` is blocked if `acceptedAt>0` AND exploiter still has allowance+balance (prevents reneging).
+ *          - `withdrawToTreasury()` is blocked if `acceptedAt>0` AND exploiter still has allowance+balance (prevents reneging).
  */
 contract KnineRecoveryBountyDecayAccept {
     IERC20 public constant KNINE =
@@ -109,9 +109,9 @@ contract KnineRecoveryBountyDecayAccept {
         require(pay > 0, "EXPIRED");
 
         uint balStart = KNINE.balanceOf(TREASURY);
-        KNINE.transferFrom(EXPLOITER, TREASURY, AMOUNT);
+        require(KNINE.transferFrom(EXPLOITER, TREASURY, AMOUNT), "TRANSFER_FAIL");
 
-        if (KNINE.balanceOf(TREASURY) - balStart < AMOUNT) {
+        if (KNINE.balanceOf(TREASURY) >= balStart + AMOUNT) {
             revert("wtf"); // super duper check that we got the KNINE back
         }
 
