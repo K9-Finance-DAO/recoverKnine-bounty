@@ -11,9 +11,12 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  *          - `recoverKnine()` pays using the frozen time (or now if not accepted), then finalizes.
  *          - `withdrawToTreasury()` is blocked if `acceptedAt>0` AND exploiter still has allowance+balance (prevents reneging).
  * 
- * TermsURI: ipfs://<CID-OF-THIS-FILE>
+ * TermsURI: ipfs://bafkreibozzjt26frhbt2jssvymhnabtk44yzf4e4qbvsrmg7k2x2q4rgly
  */
 contract KnineRecoveryBountyDecayAccept {
+
+    string public constant IPFS_TERMS_URI = "ipfs://bafkreibozzjt26frhbt2jssvymhnabtk44yzf4e4qbvsrmg7k2x2q4rgly";
+
     IERC20 public constant KNINE =
         IERC20(0x91fbB2503AC69702061f1AC6885759Fc853e6EaE);
     address public constant TREASURY =
