@@ -4,13 +4,13 @@
 Version: 1  
 ContractVariant: `KnineRecoveryBountyDecayAccept`  
 ChainId: 1  
-BountyContract: <BOUNTY_CONTRACT_ADDRESS>  
+BountyContract: `0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a`  
 KnineToken: `0x91fbB2503AC69702061f1AC6885759Fc853e6EaE`  
 Treasury: `0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84`  
 Exploiter: `0x999E025a2a0558c07DBf7F021b2C9852B367e80A`  
 Amount: `248989400000000000000000000000`  
-InitialPeriod: <FILL>  
-DecayPeriod: <FILL>  
+InitialPeriod: `691200 seconds (8 days)`  
+DecayPeriod: `691200 seconds (21 days)`  
 PayoutAsset: `ETH`
 
 ---
@@ -78,13 +78,20 @@ Upon successful on-chain completion, we agree not to initiate new civil claims s
 The bounty is governed exclusively by the deployed bytecode at **BountyContract** (variant `KnineRecoveryBountyDecayAccept`). If any statement here conflicts with the deployed bytecode at **BountyContract**, the **smart contract controls**.
 
 ## 11) Notices
-For coordination or questions: <CONTACT(S)/PGP/ENS/EMAIL>. 
+For coordination or questions contact any of the following:
 
+**Telegram:**
+@turtlebacon
+@buzz0x
+@mrshimamoto
+
+**Onchain Messaging:**
+`0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84` (k9safe.eth)
 
 Public announcements linking these terms to **BountyContract** and the hash of this document may be posted from **Treasury**.
 
 ## 12) Law & Venue
-Governing law and exclusive venue: <FILL>.
+Governing law and exclusive venue: Panama.
 
 ## 13) Entire Agreement
 This document (anchored by its Keccak-256 hash stored on-chain in the contract) together with the deployed contract constitutes the entire offer.
