@@ -23,7 +23,7 @@ Three versions of the bounty recovery contract:
 **Functions:**
 
 * `recoverKnine()` – pulls KNINE via `transferFrom(exploiter, treasury, AMOUNT)` and pays **all ETH** to exploiter.
-* `ownerWithdraw(to)` – withdraw ETH after `deadline`.
+* `ownerWithdraw()` – after `deadline`, withdraws remaining ETH to `TREASURY`.
 
 **Events:** `DealFinalized(exploiter, paidEth, termsHash)`
 
@@ -41,7 +41,7 @@ Three versions of the bounty recovery contract:
 **Functions:**
 
 * `recoverKnine()` – pays the **current** decayed ETH.
-* `ownerWithdraw(to)` – after `initialPeriod + decayPeriod`.
+* `ownerWithdraw()` – after `initialPeriod + decayPeriod`, sends remaining ETH to `TREASURY`.
 
 **Events:** `DealFinalized(...)`
 
@@ -56,7 +56,7 @@ Three versions of the bounty recovery contract:
 
 * `accept()` – only exploiter; requires `allowance ≥ AMOUNT`; records `acceptedAt` (freezes payout level).
 * `recoverKnine()` – uses `acceptedAt` (if set), then clears it, pays ETH.
-* `ownerWithdraw(to)` – blocked if `acceptedAt > 0` **and** `allowance ≥ AMOUNT` (prevents reneging).
+* `ownerWithdraw()` – blocked if `acceptedAt > 0` **and** `allowance ≥ AMOUNT` (prevents reneging); when allowed, sends ETH to `TREASURY`.
 
 **Events:** `Accepted(acceptedAt, termsHash)`, `DealFinalized(...)`
 

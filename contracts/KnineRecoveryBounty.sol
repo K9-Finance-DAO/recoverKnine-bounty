@@ -63,12 +63,11 @@ contract KnineRecoveryBounty is Ownable {
     }
     
     /**
-     * @notice After the deadline, owner may reclaim any remaining ETH (offer not taken).
-     * @param to Recipient of withdrawn ETH.
+     * @notice After the deadline, owner (treasury) may reclaim any remaining ETH (offer not taken).
      */
-    function ownerWithdraw(address payable to) external onlyOwner {
+    function ownerWithdraw() external onlyOwner {
         require(block.timestamp > DEADLINE, "early");
-        (bool ok, ) = to.call{value: address(this).balance}("");
+        (bool ok, ) = payable(TREASURY).call{value: address(this).balance}("");
         require(ok, "wd");
     }
 }
