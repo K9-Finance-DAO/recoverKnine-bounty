@@ -22,4 +22,10 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .grid > div { border: 1px dashed #4445; border-radius: 8px; padding: 8px 10px; }
 .hint { font-size: 0.9em; opacity: 0.8; }
-
+.biglink { display: inline-block; font-size: 1.05rem; font-weight: 700; text-decoration: none; color: #fff; background: #2b5; padding: 10px 14px; border-radius: 10px; border: 1px solid #4445; }
+.biglink:hover { filter: brightness(1.05); }
+.links-row a { text-decoration: none; }
+.copy-btn { border: 1px solid #4445; background: transparent; color: inherit; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.copy-btn:disabled { opacity: .6; cursor: default; }
+.warn { color: #ffb84d; }
+.error { color: #ff6b6b; }

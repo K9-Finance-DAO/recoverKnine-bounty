@@ -12,7 +12,11 @@ contract FalseReturnERC20 {
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
 
     function mint(address to, uint256 amount) external {
         balanceOf[to] += amount;
@@ -25,9 +29,12 @@ contract FalseReturnERC20 {
         return true;
     }
 
-    function transferFrom(address /* from */, address /* to */, uint256 /* amount */) external pure returns (bool) {
+    function transferFrom(
+        address /* from */,
+        address /* to */,
+        uint256 /* amount */
+    ) external pure returns (bool) {
         // Does nothing and returns false
         return false;
     }
 }
-
