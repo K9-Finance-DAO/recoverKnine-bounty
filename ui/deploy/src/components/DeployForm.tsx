@@ -15,10 +15,10 @@ export function DeployForm() {
   const [loadingArtifact, setLoadingArtifact] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const [initialPeriod, setInitialPeriod] = useState<number>(0)
-  const [decayPeriod, setDecayPeriod] = useState<number>(0)
+  const [initialPeriod, setInitialPeriod] = useState<number>(691200)
+  const [decayPeriod, setDecayPeriod] = useState<number>(1814400)
   const [termsHash, setTermsHash] = useState<string>(
-    '0x0000000000000000000000000000000000000000000000000000000000000000'
+    '0xce05e792f591bc617f475e9be1d00df89446c592738f73ff72b23c84107e645e'
   )
 
   const [predictedAddress, setPredictedAddress] = useState<string | undefined>()

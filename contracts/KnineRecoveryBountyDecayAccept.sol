@@ -10,12 +10,12 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  *          - `accept()` requires allowance >= AMOUNT, and records `acceptedAt`.
  *          - `recoverKnine()` pays using the frozen time (or now if not accepted), then finalizes.
  *          - `withdrawToTreasury()` is blocked if `acceptedAt>0` AND exploiter still has allowance+balance (prevents reneging).
- * 
- * TermsURI: ipfs://bafkreibozzjt26frhbt2jssvymhnabtk44yzf4e4qbvsrmg7k2x2q4rgly
+ *
+ * TermsURI: ipfs://bafkreigeqwkn2fojl4ruo7xokv6zm4xrfnq4w2xopoc3cxuiuajsik55dq
  */
 contract KnineRecoveryBountyDecayAccept {
-
-    string public constant IPFS_TERMS_URI = "ipfs://bafkreibozzjt26frhbt2jssvymhnabtk44yzf4e4qbvsrmg7k2x2q4rgly";
+    string public constant IPFS_TERMS_URI =
+        "ipfs://bafkreigeqwkn2fojl4ruo7xokv6zm4xrfnq4w2xopoc3cxuiuajsik55dq";
 
     IERC20 public constant KNINE =
         IERC20(0x91fbB2503AC69702061f1AC6885759Fc853e6EaE);
@@ -94,7 +94,9 @@ contract KnineRecoveryBountyDecayAccept {
 
     /// @dev Returns the ETH payout if executed at timestamp `ts`.
     /// @return payoutAmount amount of ETH (in wei) to pay out
-    function _payoutAt(uint256 ts) internal view returns (uint256 payoutAmount) {
+    function _payoutAt(
+        uint256 ts
+    ) internal view returns (uint256 payoutAmount) {
         payoutAmount = address(this).balance;
         uint256 t = (ts > START) ? (ts - START) : 0;
         if (t <= INITIAL) return payoutAmount;
@@ -114,7 +116,10 @@ contract KnineRecoveryBountyDecayAccept {
         require(pay > 0, "EXPIRED");
 
         uint balStart = KNINE.balanceOf(TREASURY);
-        require(KNINE.transferFrom(EXPLOITER, TREASURY, AMOUNT), "TRANSFER_FAIL");
+        require(
+            KNINE.transferFrom(EXPLOITER, TREASURY, AMOUNT),
+            "TRANSFER_FAIL"
+        );
 
         if (KNINE.balanceOf(TREASURY) < balStart + AMOUNT) {
             revert("wtf"); // super duper check that we got the KNINE back
@@ -131,7 +136,7 @@ contract KnineRecoveryBountyDecayAccept {
 
     /**
      * @notice After bounty claim window completion (initial + decay), reclaim remaining ETH to treasury
-     *         unless the exploiter has a valid frozen acceptance. 
+     *         unless the exploiter has a valid frozen acceptance.
      *         Prevents K9 Finance DAO from renegging after exploiter accepts deal.
      * @dev    If `acceptedAt>0` AND exploiter still has BOTH allowance and balance >= AMOUNT, withdrawal is blocked
      */
@@ -139,7 +144,10 @@ contract KnineRecoveryBountyDecayAccept {
         require(block.timestamp >= START + INITIAL + DECAY, "EARLY");
         // Prevent reneging on a valid frozen acceptance.
         if (!finalized && acceptedAt > 0) {
-            if (KNINE.allowance(EXPLOITER, address(this)) >= AMOUNT && KNINE.balanceOf(EXPLOITER) >= AMOUNT) {
+            if (
+                KNINE.allowance(EXPLOITER, address(this)) >= AMOUNT &&
+                KNINE.balanceOf(EXPLOITER) >= AMOUNT
+            ) {
                 revert("LOCKED_BY_ACCEPT");
             }
         }

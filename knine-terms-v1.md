@@ -10,7 +10,7 @@ Treasury: `0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84`
 Exploiter: `0x999E025a2a0558c07DBf7F021b2C9852B367e80A`  
 Amount: `248989400000000000000000000000`  
 InitialPeriod: `691200 seconds (8 days)`  
-DecayPeriod: `691200 seconds (21 days)`  
+DecayPeriod: `1814400 seconds (21 days)`  
 PayoutAsset: `ETH`
 
 ---

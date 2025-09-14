@@ -1,7 +1,7 @@
 # KNINE Recovery Bounty
 
 - Final Bounty Terms: [knine-terms-v1.md](knine-terms-v1.md)
-    - Hash: `0xe9b2d8255a7eea82848153455c2beb79a13c2bd8b5c235a3917151fd80b9b4d2`
+    - Hash: `0xce05e792f591bc617f475e9be1d00df89446c592738f73ff72b23c84107e645e`
 - Final Bounty Contract: [KnineRecoveryBountyDecayAccept.sol](contracts/KnineRecoveryBountyDecayAccept.sol)
 
 
