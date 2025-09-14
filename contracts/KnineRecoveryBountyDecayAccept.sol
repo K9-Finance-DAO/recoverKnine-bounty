@@ -10,6 +10,8 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  *          - `accept()` requires allowance >= AMOUNT, and records `acceptedAt`.
  *          - `recoverKnine()` pays using the frozen time (or now if not accepted), then finalizes.
  *          - `withdrawToTreasury()` is blocked if `acceptedAt>0` AND exploiter still has allowance+balance (prevents reneging).
+ * 
+ * TermsURI: ipfs://<CID-OF-THIS-FILE>
  */
 contract KnineRecoveryBountyDecayAccept {
     IERC20 public constant KNINE =
