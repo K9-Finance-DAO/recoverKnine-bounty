@@ -1,17 +1,17 @@
 # KNINE Recovery Bounty — Terms
 
 ## Header (hash-bound fields)
-Version: 1  
-ContractVariant: KnineRecoveryBountyDecayAccept  
-ChainId: 1  
+Version: `1`  
+ContractVariant: `KnineRecoveryBountyDecayAccept`
+ChainId: `1`  
 BountyContract: <BOUNTY_CONTRACT_ADDRESS>  
-KnineToken: 0x91fbB2503AC69702061f1AC6885759Fc853e6EaE  
-Treasury: 0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84  
-Exploiter: 0x999E025a2a0558c07DBf7F021b2C9852B367e80A  
-Amount (base units, 18d): 248989400000000000000000000000  
+KnineToken: `0x91fbB2503AC69702061f1AC6885759Fc853e6EaE`
+Treasury: `0xDA4Df6E2121eDaB7c33Ed7FE0f109350939eDA84`
+Exploiter: `0x999E025a2a0558c07DBf7F021b2C9852B367e80A`
+Amount: `248989400000000000000000000000`
 InitialPeriod: <FILL>  
 DecayPeriod: <FILL>  
-PayoutAsset: ETH
+PayoutAsset: `ETH`
 
 ---
 
