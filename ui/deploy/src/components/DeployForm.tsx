@@ -132,6 +132,9 @@ export function DeployForm() {
           Review & Deploy
         </button>
       </div>
+      {err && !loadingArtifact && !isDeploying && (
+        <div className="error">{err}</div>
+      )}
 
       {error && <div style={{ color: '#f77' }}>{error}</div>}
       {!artifact && (

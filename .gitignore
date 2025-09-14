@@ -143,3 +143,4 @@ artifacts/
 cache/compile-cache.json
 edr-fork-cache/*
 typechain/*
+**/**/typechain/*
