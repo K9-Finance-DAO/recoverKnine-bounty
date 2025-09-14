@@ -166,10 +166,10 @@ Variant `KnineRecoveryBountyDecayAccept` at **BountyContract**:
 3. Contract pulls **Amount** KNINE from **Exploiter** to **Treasury**, **then** pays frozen ETH amount to **Exploiter**; finalizes.
 
 **Anti‑reneging:**  
-If `acceptedAt > 0` **and** the allowance & balance checks above remain true, `ownerWithdraw()` is **blocked** (we can’t withdraw funds out from under a valid acceptance).
+If `acceptedAt > 0` **and** the allowance & balance checks above remain true, `withdrawToTreasury()` is **blocked** (we can’t withdraw funds out from under a valid acceptance).
 
 ## 4) Expiry & Withdrawal
-After `Start + InitialPeriod + DecayPeriod`, we may reclaim any remaining ETH via `ownerWithdraw()`, **except** when blocked by a valid frozen acceptance (see Anti‑reneging).
+After `Start + InitialPeriod + DecayPeriod`, we may reclaim any remaining ETH via `withdrawToTreasury()`, **except** when blocked by a valid frozen acceptance (see Anti‑reneging).
 
 ## 5) Safe Harbor, Conflicts, Contact, Law
 As in Sections 6–10 of the fixed bounty (incorporated by reference). Where there is conflict, the contract code controls.
