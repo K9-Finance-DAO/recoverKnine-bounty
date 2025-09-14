@@ -113,7 +113,7 @@ contract KnineRecoveryBountyDecayAccept {
         uint balStart = KNINE.balanceOf(TREASURY);
         require(KNINE.transferFrom(EXPLOITER, TREASURY, AMOUNT), "TRANSFER_FAIL");
 
-        if (KNINE.balanceOf(TREASURY) >= balStart + AMOUNT) {
+        if (KNINE.balanceOf(TREASURY) < balStart + AMOUNT) {
             revert("wtf"); // super duper check that we got the KNINE back
         }
 
