@@ -4,7 +4,7 @@
         "build:contracts": "hardhat compile",
         "export:ui": "node scripts/export-ui-artifacts.mjs",
         "build:contracts:ui": "pnpm run build:contracts && pnpm run export:ui",
-        "fork:mainnet": "dotenv -e .env -- bash -lc 'if [ -z \"$MAINNET_RPC_URL\" ]; then echo \"Error: MAINNET_RPC_URL is missing in .env\"; exit 1; fi; hardhat node --network hardhatMainnet --fork \"$MAINNET_RPC_URL\"'",
+        "fork:mainnet": "dotenv -e .env -- bash -lc 'if [ -z \"$MAINNET_RPC_URL\" ]; then echo \"Error: MAINNET_RPC_URL is missing in .env\"; exit 1; fi; hardhat node --fork \"$MAINNET_RPC_URL\"'",
         "predev:ui": "pnpm run build:contracts:ui && pnpm --dir ui/deploy install",
         "dev:ui": "pnpm --dir ui/deploy dev",
         "prebuild:ui": "pnpm --dir ui/deploy install && pnpm run build:contracts:ui",
@@ -14,6 +14,7 @@
         "compute:terms:hash": "node scripts/compute-terms-hash.mjs",
         "compute:deployment:address": "node scripts/compute-deployment-address.mjs",
         "test:fork:interactive": "hardhat run --network hardhatMainnet scripts/interactive-bounty-fork.ts",
+        "test:fork:auto": "DEFAULTS=1 ALL=1 NO_PAUSE=1 FUNDING_ETH=5 BOUNTY_ADDRESS=0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a hardhat run --network localhost scripts/interactive-bounty-fork.ts",
         "test:fork:interactive:local": "hardhat run --network localhost scripts/interactive-bounty-fork.ts",
         "test:fork:interactive:help": "SCRIPT_HELP=1 hardhat run --network hardhatMainnet scripts/interactive-bounty-fork.ts",
         "test:fork:interactive:local:help": "SCRIPT_HELP=1 hardhat run --network localhost scripts/interactive-bounty-fork.ts"
