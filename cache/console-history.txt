@@ -1,0 +1,5 @@
+await knine.read.owner() 
+await knine.read.owner() → use this as KNINE_BLACKLISTER
+const knine = await viem.getContractAt(abi, "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE");
+const abi = [{ "inputs": [], "name": "owner", "outputs": [{"internalType":"address","name":"","type":"address"}], "stateMutability":"view", "type":"function" }];
+const { viem } = await hre.network.connect();

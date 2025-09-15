@@ -3,7 +3,6 @@
 /*
 
 TermsURI: ipfs://bafkreigeqwkn2fojl4ruo7xokv6zm4xrfnq4w2xopoc3cxuiuajsik55dq
-Helper DApp: 
  _  _____    _____ _                              ____    _    ___  
 | |/ / _ \  |  ___(_)_ __   __ _ _ __   ___ ___  |  _ \  / \  / _ \ 
 | ' / (_) | | |_  | | '_ \ / _` | '_ \ / __/ _ \ | | | |/ _ \| | | |

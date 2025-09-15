@@ -23,8 +23,10 @@ export default defineConfig(({ mode }) => {
   const allowedHosts = env.ALLOWED_HOSTS
     ? env.ALLOWED_HOSTS.split(',').map(h => h.trim()).filter(Boolean)
     : ['*']
+  const isProd = mode === 'production'
 
   return {
+    base: isProd ? './' : '/',
     plugins: [react()],
     define: {
       __BUILD_INFO__: JSON.stringify(BUILD_INFO),

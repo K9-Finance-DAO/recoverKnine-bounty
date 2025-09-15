@@ -12,7 +12,11 @@
         "prepreview:ui": "pnpm run build:contracts:ui && pnpm --dir ui/deploy install",
         "preview:ui": "pnpm --dir ui/deploy preview",
         "compute:terms:hash": "node scripts/compute-terms-hash.mjs",
-        "compute:deployment:address": "node scripts/compute-deployment-address.mjs"
+        "compute:deployment:address": "node scripts/compute-deployment-address.mjs",
+        "test:fork:interactive": "hardhat run --network hardhatMainnet scripts/interactive-bounty-fork.ts",
+        "test:fork:interactive:local": "hardhat run --network localhost scripts/interactive-bounty-fork.ts",
+        "test:fork:interactive:help": "SCRIPT_HELP=1 hardhat run --network hardhatMainnet scripts/interactive-bounty-fork.ts",
+        "test:fork:interactive:local:help": "SCRIPT_HELP=1 hardhat run --network localhost scripts/interactive-bounty-fork.ts"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-ignition": "^3.0.3",
@@ -24,6 +28,7 @@
         "ethers": "^6.15.0",
         "forge-std": "github:foundry-rs/forge-std#v1.9.4",
         "hardhat": "^3.0.6",
+        "hardhat-deploy": "^1.0.4",
         "typechain": "^8.3.2",
         "typescript": "~5.8.3",
         "viem": "^2.37.5"

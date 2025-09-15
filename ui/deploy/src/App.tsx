@@ -1,5 +1,4 @@
 import { Connect } from './components/Connect'
-import { DeployForm } from './components/DeployForm'
 import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { ExploiterAssist } from './pages/ExploiterAssist'
 import { BuildTag } from './components/BuildTag'
@@ -13,8 +12,7 @@ export default function App() {
           <span className="pill muted">KnineRecoveryBountyDecayAccept</span>
           <div className="space" />
           <nav className="row" style={{ gap: 6 }}>
-            <NavLink to="/" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Deploy</NavLink>
-            <NavLink to="/assist" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Assist Exploiter</NavLink>
+            <NavLink to="/" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Assist Exploiter</NavLink>
           </nav>
           <div className="space" />
           <BuildTag />
@@ -22,7 +20,7 @@ export default function App() {
         </div>
         <div className="card">
           <Routes>
-            <Route path="/" element={<DeployForm />} />
+            <Route path="/" element={<ExploiterAssist />} />
             <Route path="/assist" element={<ExploiterAssist />} />
           </Routes>
         </div>
