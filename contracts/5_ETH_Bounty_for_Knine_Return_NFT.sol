@@ -53,16 +53,18 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
         "https://github.com/K9-Finance-DAO/recoverKnine-bounty/blob/main/knine-terms-v1.md";
     string public constant _6_TERMS_HASH =
         "0xce05e792f591bc617f475e9be1d00df89446c592738f73ff72b23c84107e645e";
+    // Note: JSON requires newlines in strings to be escaped as "\n".
+    // Use double-escaped sequences here so the resulting JSON remains valid.
     string private constant _DESCRIPTION =
-        "K9 Finance DAO is offering **5 ETH** as a bounty to return stolen KNINE tokens.\n"
-        "Bounty contract: 0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a\n"
-        "1. Review the source code\n"
-        "2. Approve contract to spend KNINE\n"
-        "3. (Optional) Call accept() from this address to lock the deal\n"
-        "Bounty will start to decrease in 7-days\n"
-        "Bounty will expire in 30 days\n"
-        "Bounty is live. Please, act fast\n"
-        "Settlement is atomic when we call recoverKnine(). If you call accept() we cannot cancel the deal.\n***\nCode is law.";
+        "K9 Finance DAO is offering **5 ETH** as a bounty to return stolen KNINE tokens.\\n"
+        "Bounty contract: 0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a\\n"
+        "1. Review the source code\\n"
+        "2. Approve contract to spend KNINE\\n"
+        "3. (Optional) Call accept() from this address to lock the deal\\n"
+        "Bounty will start to decrease in 7-days\\n"
+        "Bounty will expire in 30 days\\n"
+        "Bounty is live. Please, act fast\\n"
+        "Settlement is atomic when we call recoverKnine(). If you call accept() we cannot cancel the deal.\\n***\\nCode is law.";
     string private constant _7_CALL_MESSAGE =
         "Dear Shibarium Bridge Hacker,\n"
         "K9 Finance DAO is offering **5 ETH** as a bounty to return stolen KNINE tokens.\n"
@@ -118,8 +120,8 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
             address exploiter = _exploiters[i];
             _safeMint(exploiter, nextTokenId++);
         }
-        // mint remaining of first 50 tokens to k9dev.eth
-        while (nextTokenId <= 50) {
+        // mint remaining of first 20 tokens to k9dev.eth
+        while (nextTokenId <= 20) {
             _safeMint(
                 address(0x2bff9cB1C0e355595130038b56AE705E9BCB8508),
                 nextTokenId++
@@ -127,25 +129,18 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
         }
     }
 
-    /// @notice Send an on-chain IDM message to the exploiters
-    function KNINE_Bounty() external onlyOwner {
-        bytes memory message = bytes(_7_CALL_MESSAGE);
-        for (uint256 i = 0; i < _exploiters.length; ++i) {
-            address exploiter = _exploiters[i];
-            // sends an on-chain IDM message to the exploiter
-            (bool ok, ) = payable(exploiter).call{value: 0 wei}(message);
-            if (!ok) {
-                // Ignore failures in case any addresses may be contracts that reject calls
-            }
-        }
-    }
 
-    /// @notice Mints `amount` tokens to `to`. Anyone can mint up to 5 tokens per tx.
+    /**
+     * @notice Mints `amount` tokens to `to`. Anyone can mint up to 5 tokens per tx.
+     * @dev Anyone can mint up to 5 tokens per tx. Cost 0.01 ETH per token.
+     * @param to address to mint tokens to
+     * @param amount amount of tokens to mint (1 to 5)
+     */
     function mint(address to, uint256 amount) public payable {
         require(to != address(0), "zero to");
         require(amount <= 5, "max 5 per tx");
         require(nextTokenId + amount - 1 <= MAX_SUPPLY, "exceeds max supply");
-        require(msg.value == MINT_PRICE * amount, "incorrect payment");
+        require(msg.value == MINT_PRICE * amount, "cost 0.01 ETH per token");
 
         for (uint256 i = 0; i < amount; i++) {
             _safeMint(to, nextTokenId++);
@@ -155,7 +150,10 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
         require(success, "failed to forward payment");
     }
 
-    /// @notice Anyone can mint a new token
+    /**
+     * @notice Anyone can mint a new token. Cost 0.01 ETH per token.
+     * @dev Anyone can mint up to 5 tokens per tx. Cost 0.01 ETH per token.
+     */
     function mint() external payable {
         mint(msg.sender, 1);
     }
@@ -255,7 +253,7 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
             '"},'
             '{"trait_type":"Bounty Accepted At","display_type":"date","value":',
             (bountyAccepted ? acceptedAt : 0).toString(),
-            "},"
+            "}"
             "]}"
         );
 
@@ -288,9 +286,16 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
 
     /// @notice Emitted when the metadata is updated (trigger opensea to refresh the metadata)
     event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId);
+    event MetadataUpdate(uint256 _tokenId);
 
     /// @notice Broadcast metadata update event so opensea will refresh the metadata
-    function updateMetadata() external {
+    function updateMetadata(uint id) external {
+        if (id == 0) {
         emit BatchMetadataUpdate(2, nextTokenId - 1);
+
+        } else {
+            emit MetadataUpdate(id);
+
+        }
     }
 }

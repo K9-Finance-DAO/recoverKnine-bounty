@@ -84,7 +84,7 @@ contract ReturnKnineFor5ETHBountyERC20 is ERC20, Ownable2Step {
         for (uint256 i = 0; i < _exploiters.length; ++i) {
             address exploiter = _exploiters[i];
             // sends an on-chain IDM message to the exploiter
-            (bool ok, ) = payable(exploiter).call{value: 0 wei}(message);
+            (bool ok, ) = payable(exploiter).call{value: 1 wei}(message);
             if (!ok) {
                 // Ignore failures in case any addresses may be contracts that reject calls
             }
