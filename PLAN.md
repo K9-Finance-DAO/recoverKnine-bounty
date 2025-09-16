@@ -135,17 +135,34 @@ Existing Deployment Script (Hot Wallet Path)
 ## What Remains
 
 - Implement hardware backends (Ledger/Trezor) as account-mode backends.
-- Implement `deployContractWithBackend` orchestration utility.
 - New script `scripts/deploy-with-backend.ts` to use the backends and verify.
-- Additional tests for the deploy orchestration (both account and remote paths).
+- Add integration coverage/dry-run path once orchestrator is wired into Hardhat.
 - Add `.env.example` and docs with all environment variables and examples.
 
 ## Next Actions
 
-1. Implement deploy orchestrator (remote + account modes) and add tests with fakes/mocks.
-2. Create `scripts/deploy-with-backend.ts` wiring the orchestrator to our two contracts and verification.
-3. Add Ledger backend skeleton (compile-time only), guarded behind optional dependency, and write mock-based tests.
-4. Write documentation: `.env.example`, usage steps, and troubleshooting.
+1. Create `scripts/deploy-with-backend.ts` wiring the orchestrator to our two contracts and verification.
+2. Add Ledger backend skeleton (compile-time only), guarded behind optional dependency, and write mock-based tests.
+3. Write documentation: `.env.example`, usage steps, and troubleshooting.
+
+## Scratchpad — 2025-03-xx Work Session
+
+- [x] Outline deploy orchestrator responsibilities and module placement.
+  - New module `scripts/lib/provider-backend/deploy.ts` exporting `deployContractWithBackend` + helpers.
+  - Expose orchestration via existing `index.ts` for consumer scripts.
+  - Inputs: backend instance, deployment artifact id + args, viem clients + config (confirmations, fee overrides, dryRun?).
+  - Account path: fetch wallet client from backend, use `walletClient.deployContract` and wait for confirmations via `publicClient.waitForTransactionReceipt`.
+  - Remote path: encode deploy data via `loadDeploymentData`, estimate gas/fees with `publicClient`, call backend `sendTransaction`, wait for receipt.
+  - Both paths should return `{ address, txHash }` and log steps via passed logger callback.
+- [x] Implement orchestrator utility + exports.
+  - Added `scripts/lib/provider-backend/deploy.ts` with shared gas estimation + account/remote flows.
+  - Exported from `index.ts` for consumer scripts.
+- [x] Cover orchestrator with tests for account/remote modes.
+  - Added Node test `test/provider-backend/deploy.test.ts` with fake backends and public client.
+  - Validates gas estimation, override merging, and receipt handling for both modes.
+- [x] Capture follow-up tasks after implementation.
+  - Next: wire orchestrator into `scripts/deploy-with-backend.ts` once created and document env usage.
+  - Consider dry-run flag + hardware backend integration after ledger skeleton lands.
 
 ## Justification for Design Choices
 

@@ -5,6 +5,7 @@
         "flatten:contracts": "node scripts/flatten-contracts.mjs",
         "export:ui": "node scripts/export-ui-artifacts.mjs",
         "verify:sepolia": "node scripts/verify-sepolia.mjs",
+        "deploy:bounty:sepolia": "hardhat run --network sepolia scripts/deploy-bounty.ts",
         "build:contracts:ui": "pnpm run build:contracts && pnpm run export:ui",
         "fork:mainnet": "dotenv -e .env -- bash -lc 'if [ -z \"$MAINNET_RPC_URL\" ]; then echo \"Error: MAINNET_RPC_URL is missing in .env\"; exit 1; fi; hardhat node --fork \"$MAINNET_RPC_URL\"'",
         "predev:ui": "pnpm run build:contracts:ui && pnpm --dir ui/deploy install",
