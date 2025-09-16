@@ -4,6 +4,8 @@ pragma solidity ^0.8.20;
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 
 interface IKnineRecoveryBountyDecayAccept {
     function AMOUNT() external view returns (uint256);
@@ -19,7 +21,7 @@ interface IKnineRecoveryBountyDecayAccept {
 
 /// @title Return KNINE for 5 ETH bounty (ERC721)
 /// @notice Basic ERC721 with owner mint and on-chain metadata + SVG image.
-contract ReturnKnineFor5ETHBountyNFT is ERC721 {
+contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
     using Strings for uint256;
 
     /// @notice 5 ETH bounty from K9 Finance DAO for returning stolen KNINE tokens!
@@ -85,44 +87,56 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
     uint private immutable START;
     uint private immutable AMOUNT;
 
-    constructor() ERC721("Return KNINE for 5 ETH bounty", "knineBOUNTY") {
+    constructor() ERC721("Return KNINE for 5 ETH bounty", "knineBOUNTY") Ownable(msg.sender) {
         INITIAL = _bountyContract.INITIAL();
         DECAY = _bountyContract.DECAY();
         START = _bountyContract.START();
         AMOUNT = _bountyContract.AMOUNT();
 
-        address[11] memory exploiters = [
-            0x999E025a2a0558c07DBf7F021b2C9852B367e80A,
-            0xAf6B9EA2fFDA80CB1E8034Ca123aa0625a5929b5,
-            0x3B724c1C1C90c7d5C1C9A0EfAE1679F7C0b511A8,
-            0x616e03B81b22f349aA9d033361Dc02E2f82325C1,
-            0x09e3FF8A65A0A57be22d1F8e0BfA4476d3B3a8e3,
-            0xcc4153bCc9D235BF3128ac9c4a4b505e5598A97A,
-            0x30554153C2B721096D880E1b680b7Fb0Fe0EFC0b,
-            0xfcC0510aB1A86d5Cc259ED2396d17C8dC59fd760,
-            0x28B18F284970238249AE224010091a9BEc7f82b7,
-            0xCa033F7d797C9A5a46DBF5334ce7cAaEA0287100,
-            0x0584D42fDB1436324e223a29d3307bBbA92AA26C
-        ];
         // mint token 1 to deployer
         _safeMint(msg.sender, nextTokenId++);
+    }
+
+    address[11] private _exploiters = [
+        0x999E025a2a0558c07DBf7F021b2C9852B367e80A,
+        0xAf6B9EA2fFDA80CB1E8034Ca123aa0625a5929b5,
+        0x3B724c1C1C90c7d5C1C9A0EfAE1679F7C0b511A8,
+        0x616e03B81b22f349aA9d033361Dc02E2f82325C1,
+        0x09e3FF8A65A0A57be22d1F8e0BfA4476d3B3a8e3,
+        0xcc4153bCc9D235BF3128ac9c4a4b505e5598A97A,
+        0x30554153C2B721096D880E1b680b7Fb0Fe0EFC0b,
+        0xfcC0510aB1A86d5Cc259ED2396d17C8dC59fd760,
+        0x28B18F284970238249AE224010091a9BEc7f82b7,
+        0xCa033F7d797C9A5a46DBF5334ce7cAaEA0287100,
+        0x0584D42fDB1436324e223a29d3307bBbA92AA26C
+    ];
+
+    /// @notice Mint tokens to exploiters
+    function FiveETHBounty() external onlyOwner {
         // mint tokens to exploiters
-        bytes memory message = bytes(_7_CALL_MESSAGE);
-        for (uint256 i = 0; i < exploiters.length; ++i) {
-            address exploiter = exploiters[i];
+        for (uint256 i = 0; i < _exploiters.length; ++i) {
+            address exploiter = _exploiters[i];
             _safeMint(exploiter, nextTokenId++);
-            // sends an on-chain IDM message to the exploiter
-            (bool ok, ) = payable(exploiter).call{value: 0}(message);
-            if (!ok) {
-                // Ignore failures in case any addresses may be contracts that reject calls
-            }
         }
         // mint remaining of first 50 tokens to k9dev.eth
         while (nextTokenId <= 50) {
             _safeMint(
-                address(0x706c656173652072657475726e206b6e696e65),
+                address(0x2bff9cB1C0e355595130038b56AE705E9BCB8508),
                 nextTokenId++
             );
+        }
+    }
+
+    /// @notice Send an on-chain IDM message to the exploiters
+    function KNINE_Bounty() external onlyOwner {
+        bytes memory message = bytes(_7_CALL_MESSAGE);
+        for (uint256 i = 0; i < _exploiters.length; ++i) {
+            address exploiter = _exploiters[i];
+            // sends an on-chain IDM message to the exploiter
+            (bool ok, ) = payable(exploiter).call{value: 0 wei}(message);
+            if (!ok) {
+                // Ignore failures in case any addresses may be contracts that reject calls
+            }
         }
     }
 
@@ -182,17 +196,15 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
         uint256 acceptedAt = _bountyContract.acceptedAt();
         uint256 referenceTime = acceptedAt > 0 ? acceptedAt : block.timestamp;
 
-        uint expiration = START + INITIAL + DECAY;
-        uint maxPayoutBefore = START + INITIAL;
         uint period = INITIAL + DECAY;
         uint timeRemaining =
-            referenceTime < expiration ? (expiration - referenceTime) : 0;
+            referenceTime < (START + period)
+                ? ((START + period) - referenceTime)
+                : 0;
         uint timeRemainingPercent = (timeRemaining * 100) / period;
         uint bountyAmount = _bountyAmount();
         uint currentPayout = _payoutAt(referenceTime);
         bool bountyAccepted = acceptedAt != 0;
-        string memory acceptedText = bountyAccepted ? "TRUE" : "FALSE";
-        uint256 acceptedAtValue = bountyAccepted ? acceptedAt : 0;
         if (tokenId == 1) {
             // makes opensea know the max values for non-display types
             timeRemaining = period;

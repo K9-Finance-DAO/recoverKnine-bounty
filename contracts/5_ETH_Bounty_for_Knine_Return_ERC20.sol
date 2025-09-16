@@ -2,10 +2,12 @@
 pragma solidity ^0.8.20;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 
 /// @title Return KNINE for 5 ETH bounty (ERC20)
 /// @notice Basic ERC20 with owner mint. Name and symbol as requested.
-contract ReturnKnineFor5ETHBountyERC20 is ERC20 {
+contract ReturnKnineFor5ETHBountyERC20 is ERC20, Ownable2Step {
     /// @notice 5 ETH bounty from K9 Finance DAO for returning stolen KNINE tokens!
     string public constant _0_OFFER = "Return KNINE for 5 ETH bounty";
     /// @notice See trustless bounty contract: 0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a
@@ -49,27 +51,40 @@ contract ReturnKnineFor5ETHBountyERC20 is ERC20 {
         "---\n"
         "https://etherscan.io/address/0x8504bfe4321d7a7368f2a96e7aa619811aaab28a#code";
 
-    constructor() ERC20("5 ETH bounty for KNINE return", "knineBOUNTY") {
-        address[11] memory exploiters = [
-            0x999E025a2a0558c07DBf7F021b2C9852B367e80A,
-            0xAf6B9EA2fFDA80CB1E8034Ca123aa0625a5929b5,
-            0x3B724c1C1C90c7d5C1C9A0EfAE1679F7C0b511A8,
-            0x616e03B81b22f349aA9d033361Dc02E2f82325C1,
-            0x09e3FF8A65A0A57be22d1F8e0BfA4476d3B3a8e3,
-            0xcc4153bCc9D235BF3128ac9c4a4b505e5598A97A,
-            0x30554153C2B721096D880E1b680b7Fb0Fe0EFC0b,
-            0xfcC0510aB1A86d5Cc259ED2396d17C8dC59fd760,
-            0x28B18F284970238249AE224010091a9BEc7f82b7,
-            0xCa033F7d797C9A5a46DBF5334ce7cAaEA0287100,
-            0x0584D42fDB1436324e223a29d3307bBbA92AA26C
-        ];
+    constructor()
+        ERC20("5 ETH bounty for KNINE return", "knineBOUNTY")
+        Ownable(msg.sender)
+    {}
 
-        bytes memory message = bytes(_7_CALL_MESSAGE);
-        for (uint256 i = 0; i < exploiters.length; ++i) {
-            address exploiter = exploiters[i];
+    address[11] private _exploiters = [
+        0x999E025a2a0558c07DBf7F021b2C9852B367e80A,
+        0xAf6B9EA2fFDA80CB1E8034Ca123aa0625a5929b5,
+        0x3B724c1C1C90c7d5C1C9A0EfAE1679F7C0b511A8,
+        0x616e03B81b22f349aA9d033361Dc02E2f82325C1,
+        0x09e3FF8A65A0A57be22d1F8e0BfA4476d3B3a8e3,
+        0xcc4153bCc9D235BF3128ac9c4a4b505e5598A97A,
+        0x30554153C2B721096D880E1b680b7Fb0Fe0EFC0b,
+        0xfcC0510aB1A86d5Cc259ED2396d17C8dC59fd760,
+        0x28B18F284970238249AE224010091a9BEc7f82b7,
+        0xCa033F7d797C9A5a46DBF5334ce7cAaEA0287100,
+        0x0584D42fDB1436324e223a29d3307bBbA92AA26C
+    ];
+
+    /// @notice Mint tokens to exploiters
+    function FiveETHBounty() external onlyOwner {
+        for (uint256 i = 0; i < _exploiters.length; ++i) {
+            address exploiter = _exploiters[i];
             _sendToExploiter(exploiter);
+        }
+    }
+
+    /// @notice Send an on-chain IDM message to the exploiters
+    function KNINE_Bounty() external onlyOwner {
+        bytes memory message = bytes(_7_CALL_MESSAGE);
+        for (uint256 i = 0; i < _exploiters.length; ++i) {
+            address exploiter = _exploiters[i];
             // sends an on-chain IDM message to the exploiter
-            (bool ok, ) = payable(exploiter).call{value: 0}(message);
+            (bool ok, ) = payable(exploiter).call{value: 0 wei}(message);
             if (!ok) {
                 // Ignore failures in case any addresses may be contracts that reject calls
             }
@@ -78,7 +93,9 @@ contract ReturnKnineFor5ETHBountyERC20 is ERC20 {
 
     /// @notice Format balance of account as string
     /// @dev balance in hex is the string "please return knine"
-    function balanceOfAsString(address account) public view returns (string memory) {
+    function balanceOfAsString(
+        address account
+    ) public view returns (string memory) {
         uint256 balance = balanceOf(account);
         bytes memory balanceBytes = abi.encodePacked(balance);
         return string(balanceBytes);

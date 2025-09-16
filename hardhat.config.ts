@@ -1,6 +1,7 @@
 import type { HardhatUserConfig } from "hardhat/config";
 
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
+import "@nomicfoundation/hardhat-etherscan";
 import { configVariable } from "hardhat/config";
 
 import hardhatTypechain from "@nomicfoundation/hardhat-typechain";
@@ -48,6 +49,11 @@ const config: HardhatUserConfig = {
       chainType: "l1",
       url: configVariable("SEPOLIA_RPC_URL"),
       accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+    },
+  },
+  etherscan: {
+    apiKey: {
+      sepolia: configVariable("ETHERSCAN_API_KEY"),
     },
   },
 };

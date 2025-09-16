@@ -13,13 +13,12 @@
         "statusBarItem.hoverBackground": "#c86449",
         "statusBarItem.remoteBackground": "#d48570",
         "statusBarItem.remoteForeground": "#15202b",
-        // "titleBar.activeBackground": "#d48570",
-        "titleBar.activeBackground": "#d4857099",
+        "titleBar.activeBackground": "#d48570",
         "titleBar.activeForeground": "#15202b",
-        "titleBar.inactiveBackground": "#d4857066",
+        "titleBar.inactiveBackground": "#d4857099",
         "titleBar.inactiveForeground": "#15202b99",
         "commandCenter.background": "#d48570bb",
-        "commandCenter.activeBackground": "#257b36",
+        "commandCenter.activeBackground": "#257b36"
     },
     "peacock.remoteColor": "#d48570"
 }
