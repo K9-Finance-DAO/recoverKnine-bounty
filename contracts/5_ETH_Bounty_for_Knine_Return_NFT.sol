@@ -6,6 +6,8 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
+import {IERC4906} from "@openzeppelin/contracts/interfaces/IERC4906.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 interface IKnineRecoveryBountyDecayAccept {
     function AMOUNT() external view returns (uint256);
@@ -21,7 +23,7 @@ interface IKnineRecoveryBountyDecayAccept {
 
 /// @title Return KNINE for 5 ETH bounty (ERC721)
 /// @notice Basic ERC721 with owner mint and on-chain metadata + SVG image.
-contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
+contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step, IERC4906 {
     using Strings for uint256;
 
     /// @notice 5 ETH bounty from K9 Finance DAO for returning stolen KNINE tokens!
@@ -65,19 +67,6 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
         "Bounty will expire in 30 days\\n"
         "Bounty is live. Please, act fast\\n"
         "Settlement is atomic when we call recoverKnine(). If you call accept() we cannot cancel the deal.\\n***\\nCode is law.";
-    string private constant _7_CALL_MESSAGE =
-        "Dear Shibarium Bridge Hacker,\n"
-        "K9 Finance DAO is offering **5 ETH** as a bounty to return stolen KNINE tokens.\n"
-        "Bounty contract: 0x8504bfE4321d7a7368F2A96E7AA619811AAaB28a\n"
-        "1. Review the source code\n"
-        "2. Approve contract to spend KNINE\n"
-        "3. (Optional) Call accept() from this address to lock the deal\n"
-        "Bounty will start to decrease in 7-days\n"
-        "Bounty will expire in 30 days\n"
-        "Bounty is live. Please, act fast\n"
-        "Settlement is atomic when we call recoverKnine(). If you call accept() we cannot cancel the deal. Code is law.\n"
-        "---\n"
-        "https://etherscan.io/address/0x8504bfe4321d7a7368f2a96e7aa619811aaab28a#code";
 
     uint256 public constant MAX_SUPPLY = 10000;
     uint256 public constant MINT_PRICE = 0.01 ether;
@@ -284,18 +273,29 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721, Ownable2Step {
         return string.concat("data:image/svg+xml;base64,", Base64.encode(svg));
     }
 
-    /// @notice Emitted when the metadata is updated (trigger opensea to refresh the metadata)
-    event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId);
-    event MetadataUpdate(uint256 _tokenId);
-
-    /// @notice Broadcast metadata update event so opensea will refresh the metadata
-    function updateMetadata(uint id) external {
+    /// @notice Broadcast metadata update events so marketplaces refresh metadata
+    function updateMetadata(uint256 id) external {
         if (id == 0) {
-        emit BatchMetadataUpdate(2, nextTokenId - 1);
-
+            if (nextTokenId > 1) {
+                emit BatchMetadataUpdate(1, nextTokenId - 1);
+            }
         } else {
             emit MetadataUpdate(id);
-
         }
+    }
+
+    /// @notice Total minted supply (lightweight alternative to ERC721Enumerable)
+    function totalSupply() external view returns (uint256) {
+        return nextTokenId - 1;
+    }
+
+    /// @inheritdoc ERC721
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, IERC165)
+        returns (bool)
+    {
+        return interfaceId == type(IERC4906).interfaceId || super.supportsInterface(interfaceId);
     }
 }
