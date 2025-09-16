@@ -178,12 +178,6 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
     ) public view override returns (string memory) {
         _requireOwned(tokenId);
 
-        string memory name_ = string.concat(
-            "KNINE return bounty #",
-            tokenId.toString()
-        );
-
-        string memory image = _imageDataURI(tokenId);
 
         uint256 acceptedAt = _bountyContract.acceptedAt();
         uint256 referenceTime = acceptedAt > 0 ? acceptedAt : block.timestamp;
@@ -209,12 +203,12 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
         string memory bountyAmountStr = _formatEth2(bountyAmount);
         string memory currentPayoutStr = _formatEth2(currentPayout);
         bytes memory json = abi.encodePacked(
-            '{"name":"',
-            name_,
+            '{"name":"KNINE return bounty #',
+            tokenId.toString(),
             '","description":"',
             _DESCRIPTION,
             '","image":"',
-            image,
+            _imageDataURI(tokenId),
             '","external_url":"',
             _3_LINK,
             '","attributes":['
@@ -224,10 +218,10 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
             ' ETH"},'
             '{"trait_type":"ETH","display_type":"number","value":5},'
             '{"trait_type":"Offer Expires","display_type":"date","value":',
-            expiration.toString(),
+            (START + INITIAL + DECAY).toString(),
             "},"
             '{"trait_type":"Claim Before for Max Payout","display_type":"date","value":',
-            maxPayoutBefore.toString(),
+            (START + INITIAL).toString(),
             "},"
             '{"trait_type":"Time Remaining","value":',
             timeRemaining.toString(),
@@ -245,10 +239,10 @@ contract ReturnKnineFor5ETHBountyNFT is ERC721 {
             currentPayoutStr,
             "},"
             '{"trait_type":"Bounty Accepted","value":"',
-            acceptedText,
+            bountyAccepted ? "TRUE" : "FALSE",
             '"},'
             '{"trait_type":"Bounty Accepted At","display_type":"date","value":',
-            acceptedAtValue.toString(),
+            (bountyAccepted ? acceptedAt : 0).toString(),
             "},"
             "]}"
         );

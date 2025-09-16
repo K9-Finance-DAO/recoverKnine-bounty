@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useAccount, usePublicClient, useWalletClient } from 'wagmi'
 import { normalizeHardhatArtifact, type HardhatArtifact } from '../lib/artifacts'
-import erc20ArtifactJson from '../../../artifacts/contracts/5_ETH_Bounty_for_Knine_Return_ERC20.sol/ReturnKnineFor5ETHBountyERC20.json'
-import erc721ArtifactJson from '../../../artifacts/contracts/5_ETH_Bounty_for_Knine_Return_NFT.sol/ReturnKnineFor5ETHBountyNFT.json'
+import erc20ArtifactJson from '../../../../artifacts/contracts/5_ETH_Bounty_for_Knine_Return_ERC20.sol/ReturnKnineFor5ETHBountyERC20.json'
+import erc721ArtifactJson from '../../../../artifacts/contracts/5_ETH_Bounty_for_Knine_Return_NFT.sol/ReturnKnineFor5ETHBountyNFT.json'
 
 type BusyKey = 'deploy20' | 'deploy721'
 
