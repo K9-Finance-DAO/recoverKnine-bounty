@@ -1,6 +1,7 @@
 import { Connect } from './components/Connect'
 import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { ExploiterAssist } from './pages/ExploiterAssist'
+import Tokens from './pages/Tokens'
 import { BuildTag } from './components/BuildTag'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
           <div className="space" />
           <nav className="row" style={{ gap: 6 }}>
             <NavLink to="/" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Assist Exploiter</NavLink>
+            <NavLink to="/tokens" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Tokens</NavLink>
           </nav>
           <div className="space" />
           <BuildTag />
@@ -22,6 +24,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<ExploiterAssist />} />
             <Route path="/assist" element={<ExploiterAssist />} />
+            <Route path="/tokens" element={<Tokens />} />
           </Routes>
         </div>
       </div>
