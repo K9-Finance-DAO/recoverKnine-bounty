@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { ExploiterAssist } from './pages/ExploiterAssist'
 import Tokens from './pages/Tokens'
 import { BuildTag } from './components/BuildTag'
+import DeployMultiFunder from './pages/DeployMultiFunder'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <nav className="row" style={{ gap: 6 }}>
             <NavLink to="/" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Assist Exploiter</NavLink>
             <NavLink to="/tokens" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Tokens</NavLink>
+            <NavLink to="/multi" className={({ isActive }) => `pill ${isActive ? '' : 'muted'}`}>Deploy Multi‑Funder</NavLink>
           </nav>
           <div className="space" />
           <BuildTag />
@@ -25,6 +27,7 @@ export default function App() {
             <Route path="/" element={<ExploiterAssist />} />
             <Route path="/assist" element={<ExploiterAssist />} />
             <Route path="/tokens" element={<Tokens />} />
+            <Route path="/multi" element={<DeployMultiFunder />} />
           </Routes>
         </div>
       </div>
