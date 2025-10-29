@@ -10,12 +10,12 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  *          and returns KNINE to the Shibarium Bridge. Remaining ETH is refunded pro‑rata to funders
  *          via a snapshot + batched distribution with pull fallback.
  *
- * @dev    Multiple funders can send ETH to the contract after deployment to increase the bounty pool.
- * TermsURI: ipfs://TODO
+ * @dev     Multiple funders can send ETH to the contract after deployment to increase the bounty pool.
+ * TermsURI: ipfs://bafkreifp7aycps7lozpln4y2mcpyksei6lgiu3ylosr7vuznjcajqhjwzu
  */
 contract KnineRecoveryBountyDecayAcceptMultiFunder {
     // ===== Constants =====
-    string public constant IPFS_TERMS_URI = "ipfs://TODO";
+    string public constant IPFS_TERMS_URI = "ipfs://bafkreifp7aycps7lozpln4y2mcpyksei6lgiu3ylosr7vuznjcajqhjwzu";
     IERC20 public constant KNINE =
         IERC20(0x91fbB2503AC69702061f1AC6885759Fc853e6EaE);
     address public constant EXPLOITER =
@@ -47,6 +47,7 @@ contract KnineRecoveryBountyDecayAcceptMultiFunder {
     /// @notice Time window for bounty claim (in seconds) during which available claim decreases linearly
     uint256 public immutable DECAY;
     /// @notice Keccak256 of human‑readable terms (e.g., IPFS text) for safe‑harbor / scope.
+    /// @dev    0xdc41ed1a9106d5b1a5325e996240b1d76ee437ead8b8471e627f9b53ad2d3d1f
     bytes32 public immutable TERMS_HASH;
 
     // ===== Acceptance / finalization =====
