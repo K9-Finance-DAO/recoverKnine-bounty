@@ -146,3 +146,4 @@ typechain/*
 **/**/typechain/*
 cache/.hardhat-network-instances.json
 ignition/deployments/chain-31337/build-info/solc-0_8_28-c1b15e0a20632959a20583e0a0cc222e0f600631.json
+cache/
