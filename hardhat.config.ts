@@ -35,13 +35,27 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
-    hardhatMainnet: {
+    hardhat: {
+      // Default network for unit tests - clean, fast, no forking
       type: "edr-simulated",
       chainType: "l1",
+    },
+    hardhatMainnet: {
+      // Forked network for integration tests with real contracts
+      type: "edr-simulated",
+      chainType: "l1",
+      forking: {
+        url: "https://eth-mainnet.g.alchemy.com/v2/Inz_9P6EyMb-QUak42Q6dPZw_GoTWDBR",
+      },
     },
     hardhatOp: {
       type: "edr-simulated",
       chainType: "op",
+    },
+    localhost: {
+      type: "http",
+      chainType: "l1",
+      url: "http://127.0.0.1:8545",
     },
     mainnet: {
       type: "http",
