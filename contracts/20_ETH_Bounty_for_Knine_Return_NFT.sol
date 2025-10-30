@@ -41,7 +41,7 @@ contract ReturnKnineFor20ETHBountyNFT is ERC721, Ownable2Step, IERC4906 {
         "K9 Finance DAO is offering **20 ETH** as a bounty to return stolen KNINE tokens through a trustless bounty contract. Please, act fast and return KNINE for 20 ETH bounty.";
     /// @notice Human-readable terms summary link.
     string public constant _5_TERMS_PRETTY =
-        "https://github.com/K9-Finance-DAO/recoverKnine-bounty/blob/main/knine-terms-v1.md";
+        "https://github.com/K9-Finance-DAO/recoverKnine-bounty/blob/main/knine-terms-v2.md";
 
     /// @notice Address of the live trustless bounty contract.
     address public immutable _1_BOUNTY_CONTRACT;
